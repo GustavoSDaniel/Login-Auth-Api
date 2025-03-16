@@ -31,7 +31,7 @@ public class SecurityFilter extends OncePerRequestFilter { // OncePerRequestFilt
         var login = tokenService.validandoToken(token); //  AQUI ELE PEGA O TOKEN E VERIFICA SE NÃO É NULO
 
         if(login != null){
-            Usuario usuario = usuarioRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("Usuario Não encontrado")); // VAI BUSCAR O USUARIO LA NO BANCO DE DADOS
+            Usuario usuario = usuarioRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("Usuario Não encontrado")); // VAI BUSCAR O USUARIO LA NO BANCO DE DADOS e CASO NÃO ACHEI VAI RETORNAR O ORELSE
             var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")); // CRIA UMA COLEÇÃO DE ROLE
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null, authorities);// CRIA UM OBJETO DE USUARIO PARA AUTENTICAÇÃO
             SecurityContextHolder.getContext().setAuthentication(authentication);
