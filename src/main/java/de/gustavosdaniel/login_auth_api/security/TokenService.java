@@ -48,6 +48,7 @@ public class TokenService {
     }
 
     private Instant generateExpirationDate() { // TEMPO DE DURAÇÃO DO TOKEN
-        return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.of("-3:00")); // O TOKEN VAI SER GERADO NA HORA ELE VAI DURA 1 HORA NP NOSSO HORARIO
+        return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.of("-03:00"));// O TOKEN VAI SER GERADO NA HORA ELE VAI DURA 1 HORA NP NOSSO HORARIO
+
     }
 }

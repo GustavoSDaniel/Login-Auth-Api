@@ -26,9 +26,9 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity<> login(@RequestBody LoginRequestDTO body ) {
+    public ResponseEntity login(@RequestBody LoginRequestDTO body ) {
         Usuario usuario = usuarioRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
-        if (passwordEncoder.matches(usuario.getSenha(), body.senha())){// VAI COMPARAR SE A SENHA QUE EU RECEBI NO BODY [E A MESMA QUE EU TERNHO SALVO NO BANCO DE DADOS
+        if (passwordEncoder.matches(body.senha(), usuario.getSenha())){// VAI COMPARAR SE A SENHA QUE EU RECEBI NO BODY [E A MESMA QUE EU TERNHO SALVO NO BANCO DE DADOS
             String token = this.tokenService.generateToken(usuario);
             return ResponseEntity.ok(new ResponseDTO(usuario.getNome(), token));
         }
@@ -36,7 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<> register(@RequestBody RegisterRequestDTO body ) {
+    public ResponseEntity register(@RequestBody RegisterRequestDTO body ) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(body.email());
         if (usuario.isEmpty()) { //SE NÃO TIVER USUARIO
             Usuario novoSsuario = new Usuario();
